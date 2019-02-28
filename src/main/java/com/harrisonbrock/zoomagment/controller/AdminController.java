@@ -1,5 +1,6 @@
 package com.harrisonbrock.zoomagment.controller;
 
+import com.harrisonbrock.zoomagment.domain.Animal;
 import com.harrisonbrock.zoomagment.domain.TelephoneNumber;
 import com.harrisonbrock.zoomagment.domain.Zoo;
 import com.harrisonbrock.zoomagment.services.MapValidationErrorService;
@@ -9,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.parser.Entity;
 import javax.validation.Valid;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/admin")
@@ -36,12 +39,27 @@ public class AdminController {
         return new ResponseEntity<>(zoo, HttpStatus.CREATED);
     }
 
+    @GetMapping("/animals")
+    public ResponseEntity<?> getAllAnimals() {
+        return new ResponseEntity<>(zooService.getAllAnimals(), HttpStatus.OK);
+    }
+    @PostMapping("/animal/zoos/{id}")
+    public ResponseEntity<?> createNewAnimaForZooById(@Valid @RequestBody Animal animal, @PathVariable long id, BindingResult result) {
+
+        ResponseEntity<?> errorMap = errorService.mapValidationService(result);
+
+        if (errorMap != null) return  errorMap;
+
+        Zoo zoo = zooService.findZooById(id);
+        zoo.getAnimals().add(animal);
+        zooService.addNewZoo(zoo);
+        return new ResponseEntity<>(animal, HttpStatus.CREATED);
+    }
+
     @PostMapping("/phones/zoo/{id}")
     public ResponseEntity<?> createNewPhoneNumber(@Valid @RequestBody TelephoneNumber number, @PathVariable long id, BindingResult result) {
         ResponseEntity<?> errorMap = errorService.mapValidationService(result);
-        System.out.println("phones");
         if (errorMap != null) return  errorMap;
-        System.out.println("admin add phone");
         Zoo zoo = zooService.findZooById(id);
         zoo.getTelephoneNumbers().add(number);
         zooService.addNewZoo(zoo);

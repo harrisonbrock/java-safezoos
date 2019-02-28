@@ -10,22 +10,30 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Data
-@NoArgsConstructor
-@Setter
-@Getter
-@Table(name = "animals")
+//@Entity
+//@Data
+//@NoArgsConstructor
+//@Setter
+//@Getter
+//@Table(name = "animals")
+@Embeddable
 public class Animal {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "animalId")
-    private long Id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "animalId")
+//    private long Id;
 
     private String animalType;
 
-    @ManyToMany
-    @JsonIgnoreProperties("animals")
-    private Set<Zoo> zoos = new HashSet<>();
+    public Animal() {
+    }
+
+    public String getAnimalType() {
+        return animalType;
+    }
+
+    public void setAnimalType(String animalType) {
+        this.animalType = animalType;
+    }
 }

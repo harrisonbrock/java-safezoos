@@ -1,4 +1,4 @@
-package com.harrisonbrock.zoomagment.exceotions;
+package com.harrisonbrock.zoomagment.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

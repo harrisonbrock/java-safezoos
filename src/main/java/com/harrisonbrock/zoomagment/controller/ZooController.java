@@ -23,17 +23,6 @@ public class ZooController {
         this.errorService = errorService;
     }
 
-    @PostMapping
-    public ResponseEntity<?> createNewZoo(@Valid @RequestBody Zoo newZoo, BindingResult result) {
-
-        ResponseEntity<?> errorMap = errorService.mapValidationService(result);
-
-        if (errorMap != null) return  errorMap;
-
-        Zoo zoo = zooService.addNewZoo(newZoo);
-        return new ResponseEntity<>(zoo, HttpStatus.CREATED);
-    }
-
     @GetMapping
     public ResponseEntity<?> getAllZoos() {
 

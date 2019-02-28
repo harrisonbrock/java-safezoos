@@ -35,12 +35,8 @@ public class Zoo {
     })
     private Set<TelephoneNumber> telephoneNumbers = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "zoo_animals",
-            joinColumns = {@JoinColumn(name = "zooId")},
-            inverseJoinColumns = {@JoinColumn(name = "animalsId")})
-    @JsonIgnoreProperties("zoos")
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "zoo_animals", joinColumns = @JoinColumn(name = "zooid"))
     private Set<Animal> animals = new HashSet<>();
 
 }

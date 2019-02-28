@@ -1,13 +1,13 @@
 package com.harrisonbrock.zoomagment.services;
 
+import com.harrisonbrock.zoomagment.domain.Animal;
 import com.harrisonbrock.zoomagment.domain.Zoo;
-import com.harrisonbrock.zoomagment.exceotions.ZooIdException;
-import com.harrisonbrock.zoomagment.exceotions.ZooNameException;
+import com.harrisonbrock.zoomagment.exception.ZooIdException;
+import com.harrisonbrock.zoomagment.exception.ZooNameException;
 import com.harrisonbrock.zoomagment.repositories.ZooRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ZooService {
@@ -25,6 +25,12 @@ public class ZooService {
 
     public List<Zoo> getAllZoos() {
         return repository.findAll();
+    }
+
+    public List<String> getAllAnimals() {
+
+
+        return repository.findAllAnimals();
     }
 
     public Zoo findZooById(long id) {
@@ -47,5 +53,20 @@ public class ZooService {
         else {
             return  zoo.get();
         }
+     }
+
+     public Animal createNewAnimalForZooById(Animal animal, long id) {
+        Optional<Zoo> zoo = repository.findById(id);
+
+        if (zoo.isEmpty()) {
+            // TODO: add exception
+            System.out.println("not found");
+        }
+        else {
+            zoo.get().getAnimals().add(animal);
+            repository.save(zoo.get());
+            return animal;
+        }
+        return null;
      }
 }

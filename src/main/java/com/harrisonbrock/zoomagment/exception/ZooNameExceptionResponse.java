@@ -1,4 +1,4 @@
-package com.harrisonbrock.zoomagment.exceotions;
+package com.harrisonbrock.zoomagment.exception;
 
 public class ZooNameExceptionResponse {
     private String name;
