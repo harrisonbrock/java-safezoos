@@ -27,8 +27,6 @@ public class Zoo {
     @NotBlank
     private String name;
 
-//    @OneToMany(mappedBy = "zoo")
-//    @JsonIgnoreProperties("zoo")
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "zoo_phone_number", joinColumns = @JoinColumn(name ="zooid"))
     @AttributeOverrides({
